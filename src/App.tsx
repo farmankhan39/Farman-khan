@@ -13,7 +13,25 @@ import { AboutPage } from "./pages/AboutPage";
 import { ServicesPage } from "./pages/ServicesPage";
 
 function App() {
-  const path = window.location.pathname.replace(/\/$/, "") || "/";
+  const getPath = () => {
+    // Check if redirected via 404.html query parameter (?p=/about)
+    const params = new URLSearchParams(window.location.search);
+    const p = params.get("p");
+    if (p) {
+      window.history.replaceState(null, "", window.location.pathname + p);
+      return p.replace(/\/$/, "") || "/";
+    }
+    const currentPath = window.location.pathname.replace(/\/$/, "") || "/";
+    // If hosted on GitHub pages under /Farman-khan/
+    if (currentPath.toLowerCase().endsWith("/farman-khan")) {
+      return "/";
+    }
+    // Remove repo name prefix if present
+    const cleanPath = currentPath.replace(/^\/Farman-khan/i, "") || "/";
+    return cleanPath;
+  };
+
+  const path = getPath();
 
   return (
     <div className="bg-transparent min-h-screen relative overflow-x-hidden selection:bg-primary/30 selection:text-primary-foreground">

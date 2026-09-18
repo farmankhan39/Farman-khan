@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Download, Linkedin, Mail } from "lucide-react";
 import TechStackSection from "../TechStackSection/TechStackSection";
+import ScrollingServicesMarquee from "../ScrollingServicesMarquee";
 import { Button } from "../lightswind/button";
 import { Badge } from "../lightswind/badge";
 import { HangingIdCard } from "../lightswind/HangingIdCard";
@@ -202,8 +203,9 @@ export const HeroSection = () => {
       </div>
 
       {/* Marquee appended natively to the bottom to span Full Width */}
-      <div className="w-full relative z-10 mt-auto">
+      <div className="w-full relative z-10 mt-auto flex flex-col">
         <TechStackSection />
+        <ScrollingServicesMarquee />
       </div>
     </section>
   );

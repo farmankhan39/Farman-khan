@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Globe, Megaphone, Search, Layout, TrendingUp, Code2, Smartphone, ShieldCheck } from "lucide-react";
+import { Megaphone, Search, Layout, TrendingUp, Code2, Smartphone, ShieldCheck } from "lucide-react";
 
 const serviceCards = [
   {

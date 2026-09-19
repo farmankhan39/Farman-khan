@@ -1,4 +1,5 @@
 import "./App.css";
+import { LaunchIntro } from "./components/LaunchIntro/LaunchIntro";
 import Header from "./components/Header/Header";
 import { HeroSection } from "./components/HeroSection/HeroSection";
 import { AboutSection } from "./components/AboutSection/AboutSection";
@@ -35,6 +36,7 @@ function App() {
 
   return (
     <div className="bg-transparent min-h-screen relative overflow-x-hidden selection:bg-primary/30 selection:text-primary-foreground">
+      <LaunchIntro />
       <Header />
       <main className="w-full flex flex-col pt-10 border-none">
         {path === "/about" && <AboutPage />}

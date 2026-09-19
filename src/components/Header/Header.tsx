@@ -16,8 +16,16 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showHeader] = useState(true);
 
-  const handleScrollTo = (id: string) => {
-    if (id === "#hero") window.scrollTo({ top: 0, behavior: "smooth" });
+  const handleScrollTo = (href: string, e: React.MouseEvent<HTMLAnchorElement>) => {
+    // If it's a page route (starts with / and isn't just a hash/root reload), let default browser link navigation work
+    if (href.startsWith("/")) {
+      setIsMobileMenuOpen(false);
+      return;
+    }
+    e.preventDefault();
+    if (href === "#hero" || href === "/") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
     setIsMobileMenuOpen(false);
   };
 
@@ -81,7 +89,7 @@ export default function Header() {
               <ul className="flex space-x-8">
                 {navItems.map((item) => (
                   <motion.li key={item.name} className="relative group text-sm font-medium text-muted-foreground transition-colors">
-                    <a href={item.href} onClick={() => handleScrollTo(item.href)} className="cursor-pointer hover:text-foreground">
+                    <a href={item.href} onClick={(e) => handleScrollTo(item.href, e)} className="cursor-pointer hover:text-foreground">
                       {item.name}
                     </a>
                     <motion.span
@@ -143,7 +151,7 @@ export default function Header() {
                     <motion.li key={item.name} {...({ variants: itemVariants } as MotionProps)}>
                       <a
                         href={item.href}
-                        onClick={() => handleScrollTo(item.href)}
+                        onClick={(e) => handleScrollTo(item.href, e)}
                         className="text-4xl font-bold text-muted-foreground hover:text-primary hover:tracking-wider transition-all cursor-pointer"
                       >
                         {item.name}

@@ -64,7 +64,7 @@ export default function Header() {
             {/* Logo */}
             <a
               href="/"
-              onClick={() => handleScrollTo("#hero")}
+              onClick={(e) => handleScrollTo("#hero", e)}
               className="cursor-pointer font-extrabold text-lg flex items-center gap-3 group select-none"
             >
               <div className="relative w-9 h-9 rounded-xl bg-gradient-to-tr from-purple-600 via-primary to-sky-400 p-[1px] shadow-lg group-hover:scale-105 transition-transform duration-300">

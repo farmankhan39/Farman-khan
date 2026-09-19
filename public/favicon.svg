@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="fk-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9333ea" />
+      <stop offset="50%" stop-color="#8b5cf6" />
+      <stop offset="100%" stop-color="#38bdf8" />
+    </linearGradient>
+    <linearGradient id="text-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#c084fc" />
+    </linearGradient>
+  </defs>
+  <!-- Squircle Base with Gradient Stroke -->
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="#090a0f" stroke="url(#fk-grad)" stroke-width="3" />
+  <!-- Monogram FK -->
+  <text x="50%" y="54%" text-anchor="middle" dominant-baseline="middle" fill="url(#text-grad)" font-family="system-ui, -apple-system, sans-serif" font-weight="900" font-size="28" letter-spacing="-1">FK</text>
+</svg>

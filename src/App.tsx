@@ -12,6 +12,7 @@ import { Footer } from "./components/Footer/Footer";
 import { PortfolioPage, ServicePage } from "./pages/PortfolioPages";
 import { AboutPage } from "./pages/AboutPage";
 import { ServicesPage } from "./pages/ServicesPage";
+import { FloatingWhatsApp } from "./components/FloatingWhatsApp/FloatingWhatsApp";
 
 function App() {
   const getPath = () => {
@@ -50,6 +51,7 @@ function App() {
         {path === "/" && <><HeroSection /><AboutSection /><ServicesSection /><ProjectsSection /><StrengthsSection /><TestimonialsSection /><ContactSection /></>}
       </main>
       <Footer />
+      <FloatingWhatsApp />
     </div>
   );
 }

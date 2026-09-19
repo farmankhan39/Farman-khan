@@ -82,12 +82,16 @@ export const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.8 }}
           >
-            <Button size="lg" className="rounded-full px-7 h-12 bg-primary text-primary-foreground font-semibold flex items-center gap-2 hover:bg-primary/90 transition-all shadow-[0_0_20px_rgba(139,92,246,0.3)] hover:shadow-[0_0_30px_rgba(139,92,246,0.5)] hover:-translate-y-1">
-              View Work <ArrowRight className="w-4 h-4" />
-            </Button>
-            <Button size="lg" variant="outline" className="rounded-full px-7 h-12 glass-panel text-foreground font-semibold flex items-center gap-2 hover:bg-foreground/10 transition-all hover:-translate-y-1 border-foreground/10">
-              Resume <Download className="w-4 h-4" />
-            </Button>
+            <a href="#projects" className="inline-block">
+              <Button size="lg" className="rounded-full px-7 h-12 bg-primary text-primary-foreground font-semibold flex items-center gap-2 hover:bg-primary/90 transition-all shadow-[0_0_20px_rgba(139,92,246,0.3)] hover:shadow-[0_0_30px_rgba(139,92,246,0.5)] hover:-translate-y-1 cursor-pointer">
+                View Work <ArrowRight className="w-4 h-4" />
+              </Button>
+            </a>
+            <a href="/contact" className="inline-block">
+              <Button size="lg" variant="outline" className="rounded-full px-7 h-12 glass-panel text-foreground font-semibold flex items-center gap-2 hover:bg-foreground/10 transition-all hover:-translate-y-1 border-foreground/10 cursor-pointer">
+                Contact & Resume <Download className="w-4 h-4" />
+              </Button>
+            </a>
           </motion.div>
 
           {/* Social Links */}

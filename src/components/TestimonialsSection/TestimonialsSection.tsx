@@ -4,20 +4,20 @@ const TestimonialsSection = () => {
   const testimonials = [
     {
       name: "Sarah Jenkins",
-      role: "CTO at InnovateX",
-      content: "Scarlett transformed our completely outdated e-commerce system into an incredibly fast, highly scalable architecture. Our conversion rate increased by 40% after the launch.",
+      role: "Founder at Global Logistics",
+      content: "Farman transformed our website with a fast, modern responsive design and boosted our search traffic significantly with SEO. Our lead conversion rate increased by 40% after the launch.",
       image: "https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=150"
     },
     {
       name: "David Chen",
-      role: "Founder, Peak Analytics",
-      content: "One of the best engineering minds I've worked with. The dashboard interface was not only flawlessly built, but also incredibly intuitive for non-technical users.",
+      role: "Director, Peak Marketing",
+      content: "One of the best web developers I've collaborated with. Farman's WordPress development and marketing landing pages are fast, clean, and convert visitors into loyal clients.",
       image: "https://images.pexels.com/photos/1516680/pexels-photo-1516680.jpeg?auto=compress&cs=tinysrgb&w=150"
     },
     {
       name: "Maria Rodriguez",
-      role: "Product Lead, Fintech Nexus",
-      content: "Delivered complex fintech integrations reliably and on time. Her attention to detail regarding both security protocols and UX is unparalleled.",
+      role: "Operations Head, Legal Care",
+      content: "Farman delivered our corporate law firm platform reliably and on schedule. His attention to detail in UI design, responsiveness, and SEO optimization is outstanding.",
       image: "https://images.pexels.com/photos/2743754/pexels-photo-2743754.jpeg?auto=compress&cs=tinysrgb&w=150"
     }
   ];

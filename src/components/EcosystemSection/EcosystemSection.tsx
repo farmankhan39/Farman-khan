@@ -21,8 +21,8 @@ export const EcosystemSection = () => {
       description: "Engineered for conversion velocity, trust & speed",
     },
     {
-      title: "Modern Web & Tech Stack",
-      description: "Fast WordPress, React & clean mobile-first code",
+      title: "Web & App Development",
+      description: "High-performance web apps, mobile-friendly platforms & scalable code",
     },
     {
       title: "Transparent execution",
@@ -34,8 +34,8 @@ export const EcosystemSection = () => {
     {
       id: 1,
       step: "01 SYSTEM",
-      title: "Web Strategy",
-      desc: "Fast WordPress & web applications",
+      title: "Web & App Strategy",
+      desc: "Modern web & mobile app solutions",
       badge: "+180% Trajectory",
       icon: Code2,
       color: "#38bdf8", // Cyan

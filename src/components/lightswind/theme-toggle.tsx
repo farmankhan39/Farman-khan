@@ -47,10 +47,11 @@ export function ThemeToggle({
 }: ToggleThemeProps) {
   const [isDark, setIsDark] = useState<boolean>(() => {
     if (typeof window !== "undefined") {
-      return (
-        document.documentElement.classList.contains("dark") ||
-        localStorage.getItem("theme") === "dark"
-      );
+      const saved = localStorage.getItem("theme");
+      if (saved) {
+        return saved === "dark";
+      }
+      return true; // Default to Dark mode
     }
     return true;
   });
@@ -98,27 +99,28 @@ export function ThemeToggle({
 
     const newTheme = !isDark;
 
-    // Fallback for browsers that do not support View Transitions
-    if (!(document as any).startViewTransition) {
-      setIsDark(newTheme);
-      if (newTheme) {
+    const applyTheme = (dark: boolean) => {
+      setIsDark(dark);
+      if (dark) {
         document.documentElement.classList.add("dark");
+        document.documentElement.setAttribute("data-theme", "dark");
+        localStorage.setItem("theme", "dark");
       } else {
         document.documentElement.classList.remove("dark");
+        document.documentElement.setAttribute("data-theme", "light");
+        localStorage.setItem("theme", "light");
       }
-      localStorage.setItem("theme", newTheme ? "dark" : "light");
+    };
+
+    // Fallback for browsers that do not support View Transitions
+    if (!(document as any).startViewTransition) {
+      applyTheme(newTheme);
       return;
     }
 
     const transition = (document as any).startViewTransition(() => {
       flushSync(() => {
-        setIsDark(newTheme);
-        if (newTheme) {
-          document.documentElement.classList.add("dark");
-        } else {
-          document.documentElement.classList.remove("dark");
-        }
-        localStorage.setItem("theme", newTheme ? "dark" : "light");
+        applyTheme(newTheme);
       });
     });
 

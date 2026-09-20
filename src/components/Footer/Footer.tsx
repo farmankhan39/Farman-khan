@@ -28,9 +28,6 @@ export const Footer = () => {
 
   return (
     <footer className="w-full relative z-10 pt-16 pb-28 md:pb-36 bg-card/60 backdrop-blur-2xl border-t border-black/5 dark:border-white/10 shadow-2xl rounded-t-[3rem] overflow-hidden">
-      {/* Background ambient glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[350px] bg-primary/10 blur-[140px] rounded-full pointer-events-none" />
-
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10 flex flex-col gap-10">
         
         {/* Top Header Row: Logo & Back-to-Top Button */}

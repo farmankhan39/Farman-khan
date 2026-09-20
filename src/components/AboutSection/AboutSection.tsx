@@ -40,7 +40,6 @@ export const AboutSection = () => {
               viewport={{ once: true }}
             >
               <div className="glass-panel p-6 rounded-2xl border border-foreground/10 hover:border-primary/50 hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden h-full flex flex-col justify-between shadow-sm hover:shadow-lg">
-                <div className="absolute -right-6 -top-6 w-24 h-24 bg-primary/10 rounded-full blur-2xl group-hover:bg-primary/20 transition-colors pointer-events-none" />
                 <div className="text-primary mb-4 p-3 bg-primary/10 w-max rounded-xl group-hover:scale-110 transition-transform">
                   {stat.icon}
                 </div>

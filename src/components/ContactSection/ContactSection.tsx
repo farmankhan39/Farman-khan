@@ -41,10 +41,6 @@ export const ContactSection = () => {
         transition={{ duration: 0.8 }}
         className="glass-panel p-8 md:p-12 rounded-[3rem] border border-foreground/10 relative overflow-hidden"
       >
-        {/* Background Gradients */}
-        <div className="absolute -top-40 -right-40 w-96 h-96 bg-primary/20 blur-[100px] rounded-full pointer-events-none" />
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-cyan-500/10 blur-[100px] rounded-full pointer-events-none" />
-
         <div className="relative z-10 flex flex-col md:flex-row gap-12 md:gap-24">
           
           {/* Contact Info */}

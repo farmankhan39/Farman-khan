@@ -49,9 +49,6 @@ const TestimonialsSection = () => {
             transition={{ delay: i * 0.15, duration: 0.5 }}
             className="glass-panel p-8 rounded-3xl border border-foreground/10 flex flex-col relative overflow-hidden group hover:border-primary/30 transition-colors duration-500"
           >
-            {/* Subtle glow orb */}
-            <div className="absolute -right-10 -top-10 w-32 h-32 bg-primary/10 rounded-full blur-[40px] group-hover:bg-primary/20 transition-colors duration-500 pointer-events-none" />
-            
             {/* Quote Icon Background */}
             <div className="absolute top-6 right-8 text-primary/10 select-none">
               <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

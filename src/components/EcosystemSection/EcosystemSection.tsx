@@ -81,12 +81,6 @@ export const EcosystemSection = () => {
     },
   ];
 
-  const bottomMetrics = [
-    { value: "4.8x", label: "AVG. CLIENT ROI" },
-    { value: "99.4%", label: "DELIVERY PRECISION" },
-    { value: "24/7", label: "DIRECT SYNC" },
-  ];
-
   return (
     <section className="w-full max-w-7xl mx-auto px-6 py-24 relative overflow-hidden">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
@@ -143,26 +137,6 @@ export const EcosystemSection = () => {
               </motion.div>
             ))}
           </div>
-
-          {/* Bottom 3 Metrics Strip */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.35, duration: 0.5 }}
-            className="grid grid-cols-3 gap-4 pt-6 border-t border-foreground/10"
-          >
-            {bottomMetrics.map((metric, i) => (
-              <div key={i} className="flex flex-col">
-                <span className="text-3xl font-black text-foreground tracking-tight">
-                  {metric.value}
-                </span>
-                <span className="text-[10px] md:text-xs font-extrabold uppercase tracking-wider text-muted-foreground mt-0.5">
-                  {metric.label}
-                </span>
-              </div>
-            ))}
-          </motion.div>
         </div>
 
         {/* Right Column: Interactive Animated Connected Hub with Flowing Colored Laser Beams */}

@@ -5,6 +5,7 @@ import { LaunchIntro } from "./components/LaunchIntro/LaunchIntro";
 import Header from "./components/Header/Header";
 import { HeroSection } from "./components/HeroSection/HeroSection";
 import { AboutSection } from "./components/AboutSection/AboutSection";
+import { EcosystemSection } from "./components/EcosystemSection/EcosystemSection";
 import { ServicesSection, services } from "./components/ServicesSection/ServicesSection";
 import { ProjectsSection } from "./components/ProjectsSection/ProjectsSection";
 import { StrengthsSection } from "./components/StrengthsSection/StrengthsSection";
@@ -125,6 +126,7 @@ function App() {
           <>
             <HeroSection />
             <AboutSection />
+            <EcosystemSection />
             <ServicesSection />
             <ProjectsSection />
             <StrengthsSection />

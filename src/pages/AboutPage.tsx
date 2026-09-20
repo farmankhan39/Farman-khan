@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Compass, Target, Workflow } from "lucide-react";
 import { StrengthsSection } from "../components/StrengthsSection/StrengthsSection";
+import { EcosystemSection } from "../components/EcosystemSection/EcosystemSection";
 
 const principles = [
   {
@@ -80,6 +81,8 @@ export const AboutPage = () => {
         </div>
       </div>
     </section>
+
+    <EcosystemSection />
 
     <StrengthsSection />
 

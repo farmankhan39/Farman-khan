@@ -4,6 +4,7 @@ import { Send, MapPin, Mail, Phone, MessageSquare, CheckCircle2 } from "lucide-r
 import { Input } from "../lightswind/input";
 import { Textarea } from "../lightswind/textarea";
 import { Button } from "../lightswind/button";
+import { BorderBeam } from "../motion/BorderBeam";
 
 export const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -94,7 +95,8 @@ export const ContactSection = () => {
           </div>
 
           {/* Form */}
-          <div className="flex-1 glass-panel p-8 rounded-[2rem] border border-foreground/10 relative">
+          <div className="flex-1 glass-panel p-8 rounded-[2rem] border border-foreground/10 relative overflow-hidden">
+            <BorderBeam size={250} duration={7} colorFrom="#8b5cf6" colorTo="#38bdf8" />
             {isSubmitted ? (
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}

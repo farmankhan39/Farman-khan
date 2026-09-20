@@ -7,6 +7,7 @@ import { Badge } from "../lightswind/badge";
 import { HangingIdCard } from "../lightswind/HangingIdCard";
 import { AuroraTextEffect } from "../lightswind/aurora-text-effect";
 import { DotPattern } from "../lightswind/dot-pattern";
+import { Magnetic } from "../motion/Magnetic";
 
 export const HeroSection = () => {
   return (
@@ -82,16 +83,20 @@ export const HeroSection = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.8 }}
           >
-            <a href="#projects" className="inline-block">
-              <Button size="lg" className="rounded-full px-7 h-12 bg-primary text-primary-foreground font-semibold flex items-center gap-2 hover:bg-primary/90 transition-all shadow-[0_0_20px_rgba(139,92,246,0.3)] hover:shadow-[0_0_30px_rgba(139,92,246,0.5)] hover:-translate-y-1 cursor-pointer">
-                View Work <ArrowRight className="w-4 h-4" />
-              </Button>
-            </a>
-            <a href="/contact" className="inline-block">
-              <Button size="lg" variant="outline" className="rounded-full px-7 h-12 glass-panel text-foreground font-semibold flex items-center gap-2 hover:bg-foreground/10 transition-all hover:-translate-y-1 border-foreground/10 cursor-pointer">
-                Contact & Resume <Download className="w-4 h-4" />
-              </Button>
-            </a>
+            <Magnetic strength={0.3}>
+              <a href="#projects" className="inline-block">
+                <Button size="lg" className="rounded-full px-7 h-12 bg-primary text-primary-foreground font-semibold flex items-center gap-2 hover:bg-primary/90 transition-all shadow-[0_0_20px_rgba(139,92,246,0.3)] hover:shadow-[0_0_30px_rgba(139,92,246,0.5)] hover:-translate-y-1 cursor-pointer">
+                  View Work <ArrowRight className="w-4 h-4" />
+                </Button>
+              </a>
+            </Magnetic>
+            <Magnetic strength={0.3}>
+              <a href="/contact" className="inline-block">
+                <Button size="lg" variant="outline" className="rounded-full px-7 h-12 glass-panel text-foreground font-semibold flex items-center gap-2 hover:bg-foreground/10 transition-all hover:-translate-y-1 border-foreground/10 cursor-pointer">
+                  Contact & Resume <Download className="w-4 h-4" />
+                </Button>
+              </a>
+            </Magnetic>
           </motion.div>
 
           {/* Social Links */}
@@ -102,9 +107,11 @@ export const HeroSection = () => {
             transition={{ delay: 0.8, duration: 0.8 }}
           >
             {[Linkedin, Mail].map((Icon, i) => (
-              <a key={i} href={["https://www.linkedin.com/in/farmankhan16/", "mailto:farmantech39@gmail.com"][i]} target={i === 0 ? "_blank" : undefined} rel={i === 0 ? "noreferrer" : undefined} className="text-muted-foreground hover:text-foreground transition-colors hover:-translate-y-1 transform duration-200">
-                <Icon className="w-5 h-5" />
-              </a>
+              <Magnetic key={i} strength={0.4}>
+                <a href={["https://www.linkedin.com/in/farmankhan16/", "mailto:farmantech39@gmail.com"][i]} target={i === 0 ? "_blank" : undefined} rel={i === 0 ? "noreferrer" : undefined} className="w-10 h-10 rounded-full glass-panel border border-foreground/10 flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors shadow-sm">
+                  <Icon className="w-5 h-5" />
+                </a>
+              </Magnetic>
             ))}
           </motion.div>
         </motion.div>

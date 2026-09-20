@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import Lenis from "lenis";
 import "./App.css";
 import { LaunchIntro } from "./components/LaunchIntro/LaunchIntro";
 import Header from "./components/Header/Header";
@@ -15,6 +17,31 @@ import { ServicesPage } from "./pages/ServicesPage";
 import { FloatingWhatsApp } from "./components/FloatingWhatsApp/FloatingWhatsApp";
 
 function App() {
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.1,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: "vertical",
+      gestureOrientation: "vertical",
+      smoothWheel: true,
+      wheelMultiplier: 1.0,
+      touchMultiplier: 1.4,
+    });
+
+    let rafId: number;
+    function raf(time: number) {
+      lenis.raf(time);
+      rafId = requestAnimationFrame(raf);
+    }
+
+    rafId = requestAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      lenis.destroy();
+    };
+  }, []);
+
   const getPath = () => {
     // Check if redirected via 404.html query parameter (?p=/about)
     const params = new URLSearchParams(window.location.search);

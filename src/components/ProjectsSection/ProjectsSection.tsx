@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, Filter } from "lucide-react";
+import { TiltSpotlightCard } from "../motion/TiltSpotlightCard";
 
 export const ProjectsSection = () => {
   const [activeCategory, setActiveCategory] = useState("All");
@@ -155,13 +156,10 @@ export const ProjectsSection = () => {
       <motion.div layout className="grid grid-cols-1 md:grid-cols-12 gap-6 w-full">
         <AnimatePresence mode="popLayout">
           {filteredProjects.map((project, i) => (
-            <motion.a
+            <motion.div
               key={project.id}
               layout
-              href={project.link}
-              target="_blank"
-              rel="noreferrer"
-              className={`group relative overflow-hidden rounded-[2.25rem] block shadow-xl border border-foreground/10 ${
+              className={`${
                 filteredProjects.length <= 2 ? "md:col-span-6 h-[400px]" : project.gridClass
               }`}
               initial={{ opacity: 0, scale: 0.95 }}
@@ -169,50 +167,63 @@ export const ProjectsSection = () => {
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ delay: i * 0.05, duration: 0.4 }}
             >
-              {/* Background Image Container */}
-              <div className="absolute inset-0 bg-neutral-950">
-                <img 
-                  src={project.image} 
-                  alt={project.title}
-                  loading="lazy"
-                  decoding="async"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100 transform-gpu"
-                />
-                {/* Dark Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent pointer-events-none" />
-              </div>
-
-              {/* Content Overlay */}
-              <div className="absolute inset-0 p-8 flex flex-col justify-end pointer-events-none">
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2 mb-3 z-10">
-                  {project.tags.map((tag, idx) => (
-                    <span 
-                      key={idx} 
-                      className="px-2.5 py-0.5 rounded-full bg-white/10 backdrop-blur-md text-[10px] font-semibold text-white/90 border border-white/15"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="flex items-end justify-between gap-4 translate-y-2 group-hover:translate-y-0 transition-transform duration-300 transform-gpu">
-                  <div className="z-10 max-w-lg">
-                    <h3 className="text-2xl md:text-3xl font-extrabold text-white mb-1.5 tracking-tight drop-shadow-md">
-                      {project.title}
-                    </h3>
-                    <p className="text-sm md:text-base font-medium text-white/80 opacity-90 group-hover:opacity-100 transition-opacity duration-300">
-                      {project.subtitle}
-                    </p>
+              <TiltSpotlightCard
+                maxTilt={6}
+                spotlightColor="rgba(139, 92, 246, 0.22)"
+                className="w-full h-full rounded-[2.25rem] shadow-xl border border-foreground/10 group cursor-pointer"
+              >
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="w-full h-full block relative"
+                >
+                  {/* Background Image Container */}
+                  <div className="absolute inset-0 bg-neutral-950">
+                    <img 
+                      src={project.image} 
+                      alt={project.title}
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108 opacity-80 group-hover:opacity-100 transform-gpu"
+                    />
+                    {/* Dark Gradient Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent pointer-events-none" />
                   </div>
-                  
-                  {/* Arrow Action Icon */}
-                  <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center shrink-0 opacity-80 group-hover:opacity-100 group-hover:bg-white group-hover:text-black transition-all duration-300 rotate-45 group-hover:rotate-0 z-10 shadow-lg">
-                    <ArrowUpRight className="w-6 h-6 text-white group-hover:text-black transition-colors" />
+
+                  {/* Content Overlay */}
+                  <div className="absolute inset-0 p-8 flex flex-col justify-end pointer-events-none">
+                    {/* Tags */}
+                    <div className="flex flex-wrap gap-2 mb-3 z-10">
+                      {project.tags.map((tag, idx) => (
+                        <span 
+                          key={idx} 
+                          className="px-2.5 py-0.5 rounded-full bg-white/10 backdrop-blur-md text-[10px] font-semibold text-white/90 border border-white/15"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="flex items-end justify-between gap-4 translate-y-2 group-hover:translate-y-0 transition-transform duration-300 transform-gpu">
+                      <div className="z-10 max-w-lg">
+                        <h3 className="text-2xl md:text-3xl font-extrabold text-white mb-1.5 tracking-tight drop-shadow-md">
+                          {project.title}
+                        </h3>
+                        <p className="text-sm md:text-base font-medium text-white/80 opacity-90 group-hover:opacity-100 transition-opacity duration-300">
+                          {project.subtitle}
+                        </p>
+                      </div>
+                      
+                      {/* Arrow Action Icon */}
+                      <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center shrink-0 opacity-80 group-hover:opacity-100 group-hover:bg-white group-hover:text-black transition-all duration-300 rotate-45 group-hover:rotate-0 z-10 shadow-lg">
+                        <ArrowUpRight className="w-6 h-6 text-white group-hover:text-black transition-colors" />
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </motion.a>
+                </a>
+              </TiltSpotlightCard>
+            </motion.div>
           ))}
         </AnimatePresence>
       </motion.div>

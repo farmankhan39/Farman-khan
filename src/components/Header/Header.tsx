@@ -1,32 +1,71 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence, type Variants, type MotionProps } from "framer-motion";
 import { Menu, X } from "lucide-react";
-
 import { ThemeToggle } from "../lightswind/theme-toggle";
+import { Magnetic } from "../motion/Magnetic";
 
 const navItems = [
-  { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
-  { name: "Services", href: "/services" },
-  { name: "Projects", href: "/projects" },
-  { name: "Contact", href: "/contact" },
+  { name: "Home", href: "/", id: "hero" },
+  { name: "About", href: "/about", id: "about" },
+  { name: "Services", href: "/services", id: "services" },
+  { name: "Projects", href: "/projects", id: "projects" },
+  { name: "Contact", href: "/contact", id: "contact" },
 ];
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showHeader] = useState(true);
+  const [activeSection, setActiveSection] = useState("Home");
 
-  const handleScrollTo = (href: string, e: React.MouseEvent<HTMLAnchorElement>) => {
-    // If it's a page route (starts with / and isn't just a hash/root reload), let default browser link navigation work
+  useEffect(() => {
+    // Only track scroll on homepage
+    if (window.location.pathname !== "/" && !window.location.pathname.endsWith("farman-khan")) {
+      const match = navItems.find(item => item.href === window.location.pathname);
+      if (match) setActiveSection(match.name);
+      return;
+    }
+
+    const sectionIds = ["hero", "about", "services", "projects", "contact"];
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 200;
+      for (const id of sectionIds) {
+        const element = document.getElementById(id);
+        if (element) {
+          const top = element.offsetTop;
+          const height = element.offsetHeight;
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            const match = navItems.find(item => item.id === id);
+            if (match) setActiveSection(match.name);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const handleScrollTo = (href: string, id: string, e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (window.location.pathname === "/" || window.location.pathname.endsWith("farman-khan")) {
+      e.preventDefault();
+      setActiveSection(navItems.find(item => item.id === id)?.name || "Home");
+      if (id === "hero") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        const el = document.getElementById(id);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth" });
+        }
+      }
+      setIsMobileMenuOpen(false);
+      return;
+    }
+
     if (href.startsWith("/")) {
       setIsMobileMenuOpen(false);
       return;
     }
-    e.preventDefault();
-    if (href === "#hero" || href === "/") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-    setIsMobileMenuOpen(false);
   };
 
   const menuVariants: Variants = {
@@ -64,7 +103,7 @@ export default function Header() {
             {/* Logo */}
             <a
               href="/"
-              onClick={(e) => handleScrollTo("#hero", e)}
+              onClick={(e) => handleScrollTo("/", "hero", e)}
               className="cursor-pointer font-extrabold text-lg flex items-center gap-3 group select-none"
             >
               <div className="relative w-9 h-9 rounded-xl bg-gradient-to-tr from-purple-600 via-primary to-sky-400 p-[1px] shadow-lg group-hover:scale-105 transition-transform duration-300">
@@ -86,34 +125,48 @@ export default function Header() {
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex flex-1 justify-center">
-              <ul className="flex space-x-8">
-                {navItems.map((item) => (
-                  <motion.li key={item.name} className="relative group text-sm font-medium text-muted-foreground transition-colors">
-                    <a href={item.href} onClick={(e) => handleScrollTo(item.href, e)} className="cursor-pointer hover:text-foreground">
-                      {item.name}
-                    </a>
-                    <motion.span
-                      className="absolute -bottom-2 left-1/2 w-0 h-0.5 bg-primary/80 rounded-full shadow-[0_0_8px_rgba(139,92,246,0.8)]"
-                      initial={{ width: 0, x: "-50%" }}
-                      whileHover={{ width: "100%" }}
-                      transition={{ duration: 0.3 }}
-                    />
-                  </motion.li>
-                ))}
+              <ul className="flex space-x-6 lg:space-x-8">
+                {navItems.map((item) => {
+                  const isActive = activeSection === item.name;
+                  return (
+                    <li key={item.name} className="relative group text-sm font-medium transition-colors py-1">
+                      <a
+                        href={item.href}
+                        onClick={(e) => handleScrollTo(item.href, item.id, e)}
+                        className={`cursor-pointer transition-colors px-2 py-1 ${
+                          isActive ? "text-primary font-bold" : "text-muted-foreground hover:text-foreground"
+                        }`}
+                      >
+                        {item.name}
+                      </a>
+                      {isActive && (
+                        <motion.span
+                          layoutId="activeNavIndicator"
+                          className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-500 to-sky-400 rounded-full shadow-[0_0_10px_rgba(139,92,246,0.9)]"
+                          transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                        />
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             </nav>
 
             {/* Actions: Theme & Mobile Toggle */}
-            <div className="flex items-center gap-2">
-              <a href="/contact" className="hidden sm:inline-flex items-center rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-lg shadow-primary/20 hover:-translate-y-0.5 transition-transform">
-                Let&apos;s Talk
-              </a>
-              <ThemeToggle />
+            <div className="flex items-center gap-3">
+              <Magnetic strength={0.35}>
+                <a href="/contact" className="hidden sm:inline-flex items-center rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all">
+                  Let&apos;s Talk
+                </a>
+              </Magnetic>
+              <Magnetic strength={0.4}>
+                <ThemeToggle />
+              </Magnetic>
 
               {/* Mobile Menu Toggle */}
               <button
                 onClick={() => setIsMobileMenuOpen(true)}
-                className="md:hidden text-foreground hover:text-primary transition-colors p-2"
+                className="md:hidden text-foreground hover:text-primary transition-colors p-2 cursor-pointer"
               >
                 <Menu size={24} />
               </button>
@@ -151,7 +204,7 @@ export default function Header() {
                     <motion.li key={item.name} {...({ variants: itemVariants } as MotionProps)}>
                       <a
                         href={item.href}
-                        onClick={(e) => handleScrollTo(item.href, e)}
+                        onClick={(e) => handleScrollTo(item.href, item.id, e)}
                         className="text-4xl font-bold text-muted-foreground hover:text-primary hover:tracking-wider transition-all cursor-pointer"
                       >
                         {item.name}

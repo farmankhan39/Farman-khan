@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, Filter } from "lucide-react";
-import { TiltSpotlightCard } from "../motion/TiltSpotlightCard";
 
 export const ProjectsSection = () => {
   const [activeCategory, setActiveCategory] = useState("All");
@@ -167,11 +166,7 @@ export const ProjectsSection = () => {
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ delay: i * 0.05, duration: 0.4 }}
             >
-              <TiltSpotlightCard
-                maxTilt={6}
-                spotlightColor="rgba(139, 92, 246, 0.22)"
-                className="w-full h-full rounded-[2.25rem] shadow-xl border border-foreground/10 group cursor-pointer"
-              >
+              <div className="w-full h-full rounded-[2.25rem] shadow-xl border border-foreground/10 hover:border-primary/50 hover:shadow-2xl transition-all duration-300 group cursor-pointer overflow-hidden relative">
                 <a
                   href={project.link}
                   target="_blank"
@@ -222,7 +217,7 @@ export const ProjectsSection = () => {
                     </div>
                   </div>
                 </a>
-              </TiltSpotlightCard>
+              </div>
             </motion.div>
           ))}
         </AnimatePresence>

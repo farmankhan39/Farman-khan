@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
-import { Code2, Palette, Cpu, Search, Megaphone, Share2 } from "lucide-react";
-import { MagicCard } from "../lightswind/magic-card";
+import { Code2, Palette, Cpu, Search, Megaphone, Share2, ArrowUpRight } from "lucide-react";
 
 export type Service = {
   icon: typeof Code2;
@@ -77,29 +76,26 @@ export const ServicesSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1, duration: 0.5 }}
               viewport={{ once: true, amount: 0.1 }}
+              className="group block h-full cursor-pointer"
             >
-              <MagicCard
-                className="h-full p-8 rounded-[2rem] border border-border/80 bg-card/80"
-                gradientSize={280}
-                gradientColor="rgba(139, 92, 246, 0.12)"
-                gradientFrom="#8b5cf6"
-                gradientTo="#38bdf8"
-              >
-                <div className="flex flex-col h-full justify-between gap-6">
-                  <div>
-                    {/* Consistent Icon Styling with signature primary color */}
-                    <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/25 text-primary flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 group-hover:bg-primary/20 group-hover:border-primary/40 transition-all duration-300">
+              <div className="glass-panel h-full p-8 rounded-[2rem] border border-border/80 bg-card/80 hover:border-primary/50 hover:bg-card/95 hover:-translate-y-1 transition-all duration-300 shadow-sm hover:shadow-xl flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="w-14 h-14 rounded-2xl bg-primary/10 border border-primary/25 text-primary flex items-center justify-center shadow-sm group-hover:scale-105 group-hover:bg-primary/20 transition-all duration-300">
                       <Icon className="w-7 h-7 text-primary" />
                     </div>
-                    <h3 className="text-2xl font-bold mb-3 text-foreground tracking-tight">
-                      {service.title}
-                    </h3>
-                    <p className="text-muted-foreground leading-relaxed text-base">
-                      {service.description}
-                    </p>
+                    <div className="w-9 h-9 rounded-full bg-foreground/5 text-muted-foreground flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300 -translate-x-2 group-hover:translate-x-0">
+                      <ArrowUpRight className="w-4 h-4" />
+                    </div>
                   </div>
+                  <h3 className="text-2xl font-bold mb-3 text-foreground tracking-tight group-hover:text-primary transition-colors">
+                    {service.title}
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed text-base">
+                    {service.description}
+                  </p>
                 </div>
-              </MagicCard>
+              </div>
             </motion.a>
           );
         })}
@@ -107,3 +103,4 @@ export const ServicesSection = () => {
     </section>
   );
 };
+

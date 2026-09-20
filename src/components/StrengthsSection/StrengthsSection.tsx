@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { BarChart3, Globe2, Megaphone, Search, Share2, Smartphone, Workflow } from "lucide-react";
-import { MagicCard } from "../lightswind/magic-card";
 
 const strengths = [
   { icon: Globe2, title: "Web Development", description: "Modern, responsive websites built around your business goals and audience." },
@@ -24,13 +23,13 @@ export const StrengthsSection = () => (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {strengths.map(({ icon: Icon, title, description }, index) => (
         <motion.div key={title} initial={{ opacity: 0, y: 25 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.08, duration: 0.45 }}>
-          <MagicCard className="h-full p-7 rounded-[2rem] border border-border/80 bg-card/80" gradientSize={260} gradientColor="rgba(139, 92, 246, 0.12)" gradientFrom="#8b5cf6" gradientTo="#38bdf8">
-            <div className="w-12 h-12 rounded-2xl bg-primary/10 border border-primary/25 text-primary flex items-center justify-center mb-5">
+          <div className="glass-panel h-full p-7 rounded-[2rem] border border-border/80 bg-card/80 hover:border-primary/50 hover:bg-card/95 hover:-translate-y-1 transition-all duration-300 shadow-sm hover:shadow-xl group">
+            <div className="w-12 h-12 rounded-2xl bg-primary/10 border border-primary/25 text-primary flex items-center justify-center mb-5 group-hover:scale-105 group-hover:bg-primary/20 transition-all duration-300">
               <Icon className="w-6 h-6" />
             </div>
-            <h3 className="text-xl font-bold mb-2 text-foreground">{title}</h3>
+            <h3 className="text-xl font-bold mb-2 text-foreground group-hover:text-primary transition-colors">{title}</h3>
             <p className="text-muted-foreground leading-relaxed">{description}</p>
-          </MagicCard>
+          </div>
         </motion.div>
       ))}
     </div>

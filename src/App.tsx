@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import Lenis from "lenis";
 import "./App.css";
 import { LaunchIntro } from "./components/LaunchIntro/LaunchIntro";
@@ -15,8 +15,11 @@ import { PortfolioPage, ServicePage } from "./pages/PortfolioPages";
 import { AboutPage } from "./pages/AboutPage";
 import { ServicesPage } from "./pages/ServicesPage";
 import { FloatingWhatsApp } from "./components/FloatingWhatsApp/FloatingWhatsApp";
+import { getCleanPath, navigateTo } from "./utils/navigation";
 
 function App() {
+  const [path, setPath] = useState(getCleanPath());
+
   useEffect(() => {
     const lenis = new Lenis({
       duration: 1.1,
@@ -42,40 +45,93 @@ function App() {
     };
   }, []);
 
-  const getPath = () => {
-    // Check if redirected via 404.html query parameter (?p=/about)
-    const params = new URLSearchParams(window.location.search);
-    const p = params.get("p");
-    if (p) {
-      window.history.replaceState(null, "", window.location.pathname + p);
-      return p.replace(/\/$/, "") || "/";
-    }
-    const currentPath = window.location.pathname.replace(/\/$/, "") || "/";
-    // If hosted on GitHub pages under /Farman-khan/
-    if (currentPath.toLowerCase().endsWith("/farman-khan")) {
-      return "/";
-    }
-    // Remove repo name prefix if present
-    const cleanPath = currentPath.replace(/^\/Farman-khan/i, "") || "/";
-    return cleanPath;
-  };
+  useEffect(() => {
+    const handleLocationChange = () => {
+      setPath(getCleanPath());
+    };
 
-  const path = getPath();
+    window.addEventListener("popstate", handleLocationChange);
+
+    // Global interceptor for relative internal links
+    const handleGlobalClick = (e: MouseEvent) => {
+      const target = (e.target as HTMLElement).closest("a");
+      if (!target) return;
+      const href = target.getAttribute("href");
+      if (!href) return;
+
+      // Ignore external or specialized links
+      if (
+        href.startsWith("http://") ||
+        href.startsWith("https://") ||
+        href.startsWith("mailto:") ||
+        href.startsWith("tel:") ||
+        target.getAttribute("target") === "_blank" ||
+        target.getAttribute("download") !== null ||
+        e.ctrlKey ||
+        e.metaKey ||
+        e.shiftKey
+      ) {
+        return;
+      }
+
+      // Handle in-page anchors
+      if (href.startsWith("#")) {
+        e.preventDefault();
+        navigateTo(href);
+        return;
+      }
+
+      // Handle internal SPA routes
+      if (href.startsWith("/")) {
+        e.preventDefault();
+        navigateTo(href);
+      }
+    };
+
+    document.addEventListener("click", handleGlobalClick);
+
+    return () => {
+      window.removeEventListener("popstate", handleLocationChange);
+      document.removeEventListener("click", handleGlobalClick);
+    };
+  }, []);
 
   return (
     <div className="bg-transparent min-h-screen relative overflow-x-hidden selection:bg-primary/30 selection:text-primary-foreground">
       <LaunchIntro />
-      <Header />
+      <Header currentPath={path} />
       <main className="w-full flex flex-col pt-10 border-none">
         {path === "/about" && <AboutPage />}
         {path === "/services" && <ServicesPage />}
-        {path === "/projects" && <PortfolioPage title="Web Development Projects" description="Explore Farman Khan's portfolio of WordPress websites, SEO projects, digital marketing campaigns, and responsive web experiences." content={<ProjectsSection />} />}
-        {path === "/contact" && <PortfolioPage title="Contact Farman Khan" description="Get in touch with Farman Khan for website development, WordPress, SEO, and digital marketing projects." content={<ContactSection />} />}
+        {path === "/projects" && (
+          <PortfolioPage
+            title="Web Development Projects"
+            description="Explore Farman Khan's portfolio of WordPress websites, SEO projects, digital marketing campaigns, and responsive web experiences."
+            content={<ProjectsSection />}
+          />
+        )}
+        {path === "/contact" && (
+          <PortfolioPage
+            title="Contact Farman Khan"
+            description="Get in touch with Farman Khan for website development, WordPress, SEO, and digital marketing projects."
+            content={<ContactSection />}
+          />
+        )}
         {path.startsWith("/services/") && (() => {
           const service = services.find((item) => item.slug === path.slice("/services/".length));
-          return service ? <ServicePage service={service} /> : null;
+          return service ? <ServicePage service={service} /> : <ServicesPage />;
         })()}
-        {path === "/" && <><HeroSection /><AboutSection /><ServicesSection /><ProjectsSection /><StrengthsSection /><TestimonialsSection /><ContactSection /></>}
+        {path === "/" && (
+          <>
+            <HeroSection />
+            <AboutSection />
+            <ServicesSection />
+            <ProjectsSection />
+            <StrengthsSection />
+            <TestimonialsSection />
+            <ContactSection />
+          </>
+        )}
       </main>
       <Footer />
       <FloatingWhatsApp />

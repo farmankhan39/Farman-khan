@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { Code2, Globe2, Megaphone, Users } from "lucide-react";
 import { AnimatedCount } from "../motion/AnimatedCount";
-import { TiltSpotlightCard } from "../motion/TiltSpotlightCard";
 
 const stats = [
   { icon: <Megaphone className="w-6 h-6" />, label: "Digital Services", value: "8+" },
@@ -40,11 +39,7 @@ export const AboutSection = () => {
               transition={{ delay: i * 0.1, duration: 0.5 }}
               viewport={{ once: true }}
             >
-              <TiltSpotlightCard
-                maxTilt={6}
-                spotlightColor="rgba(139, 92, 246, 0.25)"
-                className="glass-panel p-6 rounded-2xl border border-foreground/10 hover:border-primary/50 transition-colors group relative overflow-hidden h-full flex flex-col justify-between"
-              >
+              <div className="glass-panel p-6 rounded-2xl border border-foreground/10 hover:border-primary/50 hover:-translate-y-1 transition-all duration-300 group relative overflow-hidden h-full flex flex-col justify-between shadow-sm hover:shadow-lg">
                 <div className="absolute -right-6 -top-6 w-24 h-24 bg-primary/10 rounded-full blur-2xl group-hover:bg-primary/20 transition-colors pointer-events-none" />
                 <div className="text-primary mb-4 p-3 bg-primary/10 w-max rounded-xl group-hover:scale-110 transition-transform">
                   {stat.icon}
@@ -55,7 +50,7 @@ export const AboutSection = () => {
                   </h3>
                   <p className="text-sm font-medium text-muted-foreground">{stat.label}</p>
                 </div>
-              </TiltSpotlightCard>
+              </div>
             </motion.div>
           ))}
         </div>
@@ -63,4 +58,5 @@ export const AboutSection = () => {
     </section>
   );
 };
+
 

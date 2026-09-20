@@ -3,6 +3,7 @@ import { motion, AnimatePresence, type Variants, type MotionProps } from "framer
 import { Menu, X } from "lucide-react";
 import { ThemeToggle } from "../lightswind/theme-toggle";
 import { Magnetic } from "../motion/Magnetic";
+import { navigateTo } from "../../utils/navigation";
 
 const navItems = [
   { name: "Home", href: "/", id: "hero" },
@@ -12,19 +13,26 @@ const navItems = [
   { name: "Contact", href: "/contact", id: "contact" },
 ];
 
-export default function Header() {
+export default function Header({ currentPath = "/" }: { currentPath?: string }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showHeader] = useState(true);
   const [activeSection, setActiveSection] = useState("Home");
 
   useEffect(() => {
-    // Only track scroll on homepage
-    if (window.location.pathname !== "/" && !window.location.pathname.endsWith("farman-khan")) {
-      const match = navItems.find(item => item.href === window.location.pathname);
-      if (match) setActiveSection(match.name);
+    // If not on homepage, highlight corresponding subpage item
+    if (currentPath !== "/") {
+      const match = navItems.find((item) => {
+        if (item.href === currentPath) return true;
+        if (item.href !== "/" && currentPath.startsWith(item.href)) return true;
+        return false;
+      });
+      if (match) {
+        setActiveSection(match.name);
+      }
       return;
     }
 
+    // If on homepage, track scrolling sections
     const sectionIds = ["hero", "about", "services", "projects", "contact"];
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 200;
@@ -34,7 +42,7 @@ export default function Header() {
           const top = element.offsetTop;
           const height = element.offsetHeight;
           if (scrollPosition >= top && scrollPosition < top + height) {
-            const match = navItems.find(item => item.id === id);
+            const match = navItems.find((item) => item.id === id);
             if (match) setActiveSection(match.name);
             break;
           }
@@ -42,30 +50,28 @@ export default function Header() {
       }
     };
 
+    handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [currentPath]);
 
-  const handleScrollTo = (href: string, id: string, e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (window.location.pathname === "/" || window.location.pathname.endsWith("farman-khan")) {
-      e.preventDefault();
-      setActiveSection(navItems.find(item => item.id === id)?.name || "Home");
-      if (id === "hero") {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      } else {
-        const el = document.getElementById(id);
-        if (el) {
-          el.scrollIntoView({ behavior: "smooth" });
-        }
-      }
-      setIsMobileMenuOpen(false);
+  const handleNavClick = (href: string, id: string, e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    setIsMobileMenuOpen(false);
+
+    if (currentPath === "/" && href === "/") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setActiveSection("Home");
       return;
     }
 
-    if (href.startsWith("/")) {
-      setIsMobileMenuOpen(false);
+    if (currentPath === "/" && id !== "hero") {
+      // Allow navigation to the subpage URL
+      navigateTo(href);
       return;
     }
+
+    navigateTo(href);
   };
 
   const menuVariants: Variants = {
@@ -103,7 +109,7 @@ export default function Header() {
             {/* Logo */}
             <a
               href="/"
-              onClick={(e) => handleScrollTo("/", "hero", e)}
+              onClick={(e) => handleNavClick("/", "hero", e)}
               className="cursor-pointer font-extrabold text-lg flex items-center gap-3 group select-none"
             >
               <div className="relative w-9 h-9 rounded-xl bg-gradient-to-tr from-purple-600 via-primary to-sky-400 p-[1px] shadow-lg group-hover:scale-105 transition-transform duration-300">
@@ -132,7 +138,7 @@ export default function Header() {
                     <li key={item.name} className="relative group text-sm font-medium transition-colors py-1">
                       <a
                         href={item.href}
-                        onClick={(e) => handleScrollTo(item.href, item.id, e)}
+                        onClick={(e) => handleNavClick(item.href, item.id, e)}
                         className={`cursor-pointer transition-colors px-2 py-1 ${
                           isActive ? "text-primary font-bold" : "text-muted-foreground hover:text-foreground"
                         }`}
@@ -155,7 +161,11 @@ export default function Header() {
             {/* Actions: Theme & Mobile Toggle */}
             <div className="flex items-center gap-3">
               <Magnetic strength={0.35}>
-                <a href="/contact" className="hidden sm:inline-flex items-center rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all">
+                <a
+                  href="/contact"
+                  onClick={(e) => handleNavClick("/contact", "contact", e)}
+                  className="hidden sm:inline-flex items-center rounded-full bg-primary px-5 py-2.5 text-sm font-bold text-primary-foreground shadow-lg shadow-primary/20 hover:shadow-primary/40 transition-all cursor-pointer"
+                >
                   Let&apos;s Talk
                 </a>
               </Magnetic>
@@ -167,6 +177,7 @@ export default function Header() {
               <button
                 onClick={() => setIsMobileMenuOpen(true)}
                 className="md:hidden text-foreground hover:text-primary transition-colors p-2 cursor-pointer"
+                aria-label="Toggle navigation menu"
               >
                 <Menu size={24} />
               </button>
@@ -192,6 +203,7 @@ export default function Header() {
                   animate={{ scale: 1, opacity: 1 }}
                   exit={{ scale: 0, opacity: 0 }}
                   transition={{ delay: 0.2 }}
+                  aria-label="Close navigation menu"
                 >
                   <X size={32} />
                 </motion.button>
@@ -204,7 +216,7 @@ export default function Header() {
                     <motion.li key={item.name} {...({ variants: itemVariants } as MotionProps)}>
                       <a
                         href={item.href}
-                        onClick={(e) => handleScrollTo(item.href, item.id, e)}
+                        onClick={(e) => handleNavClick(item.href, item.id, e)}
                         className="text-4xl font-bold text-muted-foreground hover:text-primary hover:tracking-wider transition-all cursor-pointer"
                       >
                         {item.name}
